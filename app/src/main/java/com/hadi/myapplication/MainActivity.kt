@@ -15,6 +15,7 @@ import com.hadi.myapplication.navigation.SetupNavGraph
 import com.hadi.myapplication.ui.theme.PaletteComposeTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -22,5 +23,6 @@ class MainActivity : ComponentActivity() {
                 SetupNavGraph(navController = rememberNavController())
             }
         }
+
     }
 }
