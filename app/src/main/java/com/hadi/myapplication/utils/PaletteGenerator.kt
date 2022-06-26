@@ -29,8 +29,38 @@ object PaletteGenerator {
                 .generate().darkVibrantSwatch),
             "onDarkVibrant" to parseBodyColor(color = Palette.from(bitmap)
                 .generate().darkVibrantSwatch?.bodyTextColor),
+            "muted" to parseColorSwatch(color = Palette.from(bitmap).generate().mutedSwatch),
+            "dominant" to parseColorSwatch(color = Palette.from(bitmap).generate().mutedSwatch)
+        )
+    }
 
-            )
+    fun extractColorsFromBitmapToParsedColors(bitmap: Bitmap): ParsedColor {
+        return ParsedColor(
+            vibrant = parseColorSwatch(color = Palette.from(bitmap).generate().vibrantSwatch),
+            lightVibrant = parseColorSwatch(color = Palette.from(bitmap)
+                .generate().lightVibrantSwatch),
+            darkVibrant = parseColorSwatch(color = Palette.from(bitmap)
+                .generate().darkVibrantSwatch),
+            muted = parseColorSwatch(color = Palette.from(bitmap).generate().mutedSwatch),
+            lightMuted = parseColorSwatch(color = Palette.from(bitmap).generate().lightMutedSwatch),
+            darkMuted = parseColorSwatch(color = Palette.from(bitmap).generate().darkMutedSwatch),
+            dominant = parseColorSwatch(color = Palette.from(bitmap).generate().dominantSwatch),
+            onVibrant = parseBodyColor(color = Palette.from(bitmap)
+                .generate().vibrantSwatch?.bodyTextColor),
+            onLightVibrant = parseBodyColor(color = Palette.from(bitmap)
+                .generate().lightVibrantSwatch?.bodyTextColor),
+            onDarkVibrant = parseBodyColor(color = Palette.from(bitmap)
+                .generate().darkVibrantSwatch?.bodyTextColor),
+            onMuted = parseBodyColor(color = Palette.from(bitmap)
+                .generate().mutedSwatch?.bodyTextColor),
+            onLightMuted = parseBodyColor(color = Palette.from(bitmap)
+                .generate().lightMutedSwatch?.bodyTextColor),
+            onDarkMuted = parseBodyColor(color = Palette.from(bitmap)
+                .generate().darkMutedSwatch?.bodyTextColor),
+            onDominant = parseBodyColor(color = Palette.from(bitmap)
+                .generate().dominantSwatch?.bodyTextColor),
+        )
+
     }
 
     private fun parseColorSwatch(color: Palette.Swatch?): String {

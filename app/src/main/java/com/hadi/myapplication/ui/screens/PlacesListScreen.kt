@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.navArgument
 import coil.compose.rememberImagePainter
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.hadi.myapplication.data.local.placeData
 import com.hadi.myapplication.data.model.Place
 import com.hadi.myapplication.navigation.Screens
@@ -30,9 +31,14 @@ import com.hadi.myapplication.navigation.Screens
 fun PlacesListScreen(
     navController: NavController,
 ) {
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(Color.White)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .verticalScroll(rememberScrollState()),
     ) {
 
