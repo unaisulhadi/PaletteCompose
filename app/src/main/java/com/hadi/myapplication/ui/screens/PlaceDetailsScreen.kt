@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,7 +50,7 @@ fun PlaceDetailsScreen(navController: NavController, placeId: String?) {
         mutableStateOf<Map<String, String>>(emptyMap())
     }
 
-    var parsedColor = remember {
+    var parsedColor by remember {
         mutableStateOf<ParsedColor>(ParsedColor())
     }
 
@@ -73,7 +75,7 @@ fun PlaceDetailsScreen(navController: NavController, placeId: String?) {
         if (result is SuccessResult) {
             val bitmap = (result.drawable as BitmapDrawable).bitmap
             if (bitmap != null) {
-                colors = PaletteGenerator.extractColorsFromBitmap(
+                parsedColor = PaletteGenerator.extractColorsFromBitmapToParsedColors(
                     bitmap = bitmap
                 )
             }
@@ -86,7 +88,7 @@ fun PlaceDetailsScreen(navController: NavController, placeId: String?) {
 
     }
 
-    systemUiController.setStatusBarColor(Color(parseColor(colors["darkVibrant"] ?: "#000000")))
+    systemUiController.setStatusBarColor(Color(parseColor(parsedColor.darkVibrant)))
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -98,10 +100,21 @@ fun PlaceDetailsScreen(navController: NavController, placeId: String?) {
             when (imageResult) {
 
                 RequestStatus.Error -> {
-                    Text(text = "Failure")
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Failure")
+                    }
                 }
                 RequestStatus.Loading -> {
-                    Text(text = "Loading")
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Loading")
+                    }
+
                 }
                 RequestStatus.Success -> {
 
@@ -118,70 +131,74 @@ fun PlaceDetailsScreen(navController: NavController, placeId: String?) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = Color(parseColor(colors["darkVibrant"]
-                                ?: "#000000")))
+                            .background(color = Color(parseColor(parsedColor.darkVibrant)))
                             .padding(all = 12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                            Row(
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp)
+                                .padding(horizontal = 12.dp, vertical = 12.dp)
+                                .background(color = Color(parseColor(parsedColor.muted)),
+                                    shape = RoundedCornerShape(8.dp)
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = selectedPlace.placeCategory,
+                                textAlign = TextAlign.Center,
+                                fontFamily = FontFamily.Monospace
+                            )
+
+                            Divider(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(100.dp)
-                                    .padding(horizontal = 12.dp, vertical = 12.dp)
-                                    .background(color = Color(parseColor(colors["onDarkVibrant"]
-                                        ?: "#000000"))),
-                            ) {
-
-                                Text(
-                                    modifier = Modifier.weight(1f),
-                                    text = "2022",
-                                    textAlign = TextAlign.Center
-                                )
-
-                                Divider(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .width(4.dp)
-                                        .background(Color.Black)
-                                )
-                                Text(
-                                    modifier = Modifier.weight(1f),
-                                    text = "120"
-                                )
+                                    .fillMaxHeight()
+                                    .width(4.dp)
+                                    .background(Color(parseColor(parsedColor.darkVibrant)))
+                            )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = selectedPlace.climate,
+                                textAlign = TextAlign.Center,
+                                fontFamily = FontFamily.Monospace
+                            )
 
 
-                                Divider(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .width(4.dp)
-                                        .background(Color.Black)
-                                )
-                                Text(
-                                    modifier = Modifier.weight(1f),
-                                    text = "EN"
-                                )
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(4.dp)
+                                    .background(Color(parseColor(parsedColor.darkVibrant)))
+                            )
 
-                                Divider(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .width(4.dp)
-                                        .background(Color.Black)
-                                )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = selectedPlace.rating.toString(),
+                                textAlign = TextAlign.Center,
+                                fontFamily = FontFamily.Monospace
+                            )
+
                         }
 
 
                         Text(
+                            modifier = Modifier.padding(bottom = 12.dp),
                             text = selectedPlace.placeTitle,
-                            color = Color(parseColor(colors["onDarkVibrant"]
-                                ?: "#000000")),
-                            fontSize = 28.sp)
+                            color = Color(parseColor(parsedColor.onDarkVibrant)),
+                            fontSize = 36.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Cursive)
 
                         Text(
                             text = selectedPlace.description,
-                            color = Color(parseColor(colors["onDarkVibrant"]
-                                ?: "#000000")),
-                            fontSize = 16.sp,)
+                            color = Color(parseColor(parsedColor.onDarkVibrant)),
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily.Monospace
+                        )
 
                     }
                 }

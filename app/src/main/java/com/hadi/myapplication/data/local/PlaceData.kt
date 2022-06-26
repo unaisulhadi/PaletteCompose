@@ -10,7 +10,7 @@ val placeData = listOf(
         placeCategory = "Mountains",
         description = "Wayanad, the green paradise is nestled among the mountains of the Western Ghats, forming the border world of the greener part of Kerala. Clean and pristine, enchanting and hypnotizing, this land is filled with history and culture. Located at a distance of 76 km. from wayanadthe sea shores of Kozhikode, this verdant hill station is full of plantations, forests and wildlife. Wayanad hills are contiguous to Mudumalai in Tamil Nadu and Bandhipur in Karnataka, thus forming a vast land mass for the wild life to move about in their most natural abode.",
         imageUrl = "https://cdn.pixabay.com/photo/2020/01/16/04/52/wayanad-4769648_960_720.jpg",
-        climate = "20°c Light Fog",
+        climate = "20°c Foggy",
         rating = 4.8
     ),
 
